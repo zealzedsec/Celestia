@@ -58,7 +58,7 @@
     "eslint-config-next": "^16.1.1",
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.5",
-    "typescript": "^5",
+    "typescript": "^7",
     "vitest": "^3.2.7"
   },
   "description": "CELESTIA \u2014 a living astronomy & astrology observatory: live ephemeris, sky dome, almanac, natal & synastry charts, planetary hours and a journal.",

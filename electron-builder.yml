@@ -50,7 +50,7 @@ linux:
       GenericName: Astronomy & Astrology Observatory
       Comment: Live sky, moon, almanac, natal charts and planetary hours
       Keywords: astronomy;astrology;moon;planets;ephemeris;horoscope;natal;almanac;
-      Categories: Science;Astronomy;Education;
+      Categories: Science;Astronomy;
     desktopActions:
       almanac:
         Name: Celestial Almanac

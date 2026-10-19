@@ -15,7 +15,7 @@ jobs:
   windows:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -37,7 +37,7 @@ jobs:
           pacman -Syu --noconfirm --needed sudo git
           useradd -m builder
           echo 'builder ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/builder
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Run setup-arch.sh (build the AppImage, skip the menu launcher)
         run: |
           chown -R builder "$GITHUB_WORKSPACE"

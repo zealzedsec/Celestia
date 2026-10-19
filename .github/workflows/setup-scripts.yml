@@ -1,0 +1,45 @@
+name: Setup scripts
+
+# Runs the one-line installers on real machines whenever they change (or on demand),
+# so the copy-paste instructions in the README are known to work.
+on:
+  push:
+    branches: [main]
+    paths: ['scripts/setup-*', 'scripts/prepare-desktop.mjs', 'scripts/after-pack.cjs', 'electron-builder.yml', 'package.json']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run setup-windows.ps1 (build the installer, skip installing)
+        shell: powershell
+        env:
+          SKIP_DEPS: '1'
+          SKIP_INSTALL: '1'
+        run: |
+          powershell -ExecutionPolicy Bypass -File .\scripts\setup-windows.ps1
+          if (-not (Get-ChildItem release -Filter 'CELESTIA-*-win-*.exe')) { throw 'no installer produced' }
+
+  arch:
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+    steps:
+      - name: Prepare a non-root user with sudo (the script refuses to run as root)
+        run: |
+          pacman -Syu --noconfirm --needed sudo git
+          useradd -m builder
+          echo 'builder ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/builder
+      - uses: actions/checkout@v4
+      - name: Run setup-arch.sh (build the AppImage, skip the menu launcher)
+        run: |
+          chown -R builder "$GITHUB_WORKSPACE"
+          sudo -u builder env SKIP_LAUNCHER=1 HOME=/home/builder bash "$GITHUB_WORKSPACE/scripts/setup-arch.sh"
+          ls "$GITHUB_WORKSPACE"/release/CELESTIA-*.AppImage

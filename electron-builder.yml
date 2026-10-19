@@ -1,0 +1,88 @@
+# CELESTIA desktop packaging — https://www.electron.build
+appId: io.github.celestia.observatory
+productName: CELESTIA
+copyright: Copyright © 2026 CELESTIA contributors
+electronVersion: 44.8.0
+
+directories:
+  app: desktop          # the tiny Electron shell (main/preload/splash)
+  output: release
+  buildResources: build
+
+files:
+  - main.cjs
+  - preload.cjs
+  - splash.html
+  - package.json
+  - "!**/node_modules/**"
+
+# the shell itself has no npm dependencies — never collect the project's (the server ships its own)
+npmRebuild: false
+buildDependenciesFromSource: false
+electronLanguages: [en-US]
+
+# the empty database and icon live beside the app; the Next.js server (with its node_modules and
+# native Prisma engine, which must load from disk) is copied in by scripts/after-pack.cjs
+extraResources:
+  - from: desktop-build/template.db
+    to: template.db
+  - from: build/icons/512x512.png
+    to: icon.png
+afterPack: scripts/after-pack.cjs
+
+asar: true
+compression: normal
+artifactName: ${productName}-${version}-${os}-${arch}.${ext}
+
+linux:
+  target: [AppImage, deb]
+  icon: build/icons
+  category: Science
+  executableName: celestia
+  maintainer: CELESTIA contributors
+  synopsis: A living astronomy & astrology observatory
+  description: >-
+    Live planetary positions over a real star dome, moon phases, a year-ahead almanac,
+    natal and synastry charts with exact time zones, planetary hours and a sky-stamped journal.
+  desktop:
+    entry:
+      Name: CELESTIA
+      GenericName: Astronomy & Astrology Observatory
+      Comment: Live sky, moon, almanac, natal charts and planetary hours
+      Keywords: astronomy;astrology;moon;planets;ephemeris;horoscope;natal;almanac;
+      Categories: Science;Astronomy;Education;
+    desktopActions:
+      almanac:
+        Name: Celestial Almanac
+        Exec: celestia --open=almanac
+      natal:
+        Name: Cast a Natal Chart
+        Exec: celestia --open=natal
+      journal:
+        Name: Book of Shadows
+        Exec: celestia --open=journal
+
+deb:
+  priority: optional
+  depends: [libgtk-3-0, libnotify4, libnss3, libxss1, libxtst6, xdg-utils, libatspi2.0-0, libuuid1, libsecret-1-0]
+
+win:
+  target: [nsis]
+  icon: build/icon.png
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: CELESTIA
+
+mac:
+  target: [dmg]
+  icon: build/icon.png
+  category: public.app-category.education
+
+publish:
+  provider: github
+  releaseType: draft

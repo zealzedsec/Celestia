@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+  // portable query engines so one Linux desktop build runs on Debian/Ubuntu, Fedora/RHEL, Arch…
+  // with OpenSSL 3 (every supported distro); "native" covers the build machine (and Windows/macOS in CI)
+  binaryTargets = ["native", "debian-openssl-3.0.x", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model SavedChart {
+  id           String   @id @default(cuid())
+  name         String
+  birthDate    String // ISO datetime string
+  lat          Float
+  lon          Float
+  locationName String
+  tzOffset     Int // minutes offset from UTC at birth location (resolved, DST-aware)
+  timeZone     String? // IANA zone the offset was resolved from, when known
+  houseSystem  String   @default("placidus")
+  chartData    String // JSON serialized chart payload
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([updatedAt])
+}
+
+model JournalEntry {
+  id          String   @id @default(cuid())
+  kind        String // pondering | tarot | horoscope | diary | dream
+  title       String
+  body        String
+  mood        String? // Radiant | Hopeful | Still | Stormy | Shadowed | Transmuting | ...
+  tags        String   @default("[]") // JSON string array
+  skySigil    String   @default("{}") // JSON: moon phase/sign, sun sign, hour ruler captured at write time
+  tarotSpread String? // JSON: { name, question, cards: [{name, suit, arcana, reversed, keywords, astro}] }
+  favorite    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([kind])
+  @@index([createdAt])
+  @@index([favorite])
+}

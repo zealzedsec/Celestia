@@ -1,0 +1,11 @@
+{
+  "name": "celestia",
+  "productName": "CELESTIA",
+  "version": "7.0.0",
+  "description": "A living astronomy & astrology observatory",
+  "main": "main.cjs",
+  "author": "CELESTIA contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/zealzedsec/Celestia",
+  "dependencies": {}
+}

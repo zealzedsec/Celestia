@@ -1,0 +1,36 @@
+name: Bug report
+description: Something in the observatory is wrong or broken
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what you saw instead.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: CELESTIA version
+      placeholder: "7.0.0 (Help → About in the desktop app)"
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Where are you running it?
+      options: [Desktop — Linux AppImage, Desktop — Linux .deb, Desktop — Windows, Desktop — macOS, Web (npm start / dev)]
+    validations:
+      required: true
+  - type: textarea
+    id: astro
+    attributes:
+      label: For calculation issues
+      description: Date, time, time zone and place used, and the value you expected (with its source, e.g. an ephemeris).
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: "Desktop: Help → Open logs → server.log / main.log"
+      render: text

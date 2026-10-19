@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:" />
+<title>CELESTIA</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #000; color: #ece8f4; font: 12px/1.4 Georgia, serif; overflow: hidden; -webkit-user-select: none; user-select: none; }
+  .wrap { height: 100%; display: grid; place-items: center; text-align: center; box-shadow: inset 0 0 0 1px rgba(233,203,124,.25); background: radial-gradient(ellipse at 50% 38%, #150f2c 0%, #000 70%); }
+  svg { width: 120px; height: 120px; display: block; margin: 0 auto 18px; }
+  .orbit { transform-origin: 23px 23px; animation: spin 6s linear infinite; }
+  .world { transform-origin: 23px 23px; animation: spin 2.4s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  h1 { margin: 0; font-weight: 400; letter-spacing: .42em; font-size: 22px; color: #e9cb7c; padding-left: .42em; }
+  p { margin: 10px 0 0; letter-spacing: .3em; text-transform: uppercase; font-size: 9.5px; color: #9d93ba; }
+  .bar { width: 160px; height: 1px; margin: 22px auto 0; background: rgba(255,255,255,.07); overflow: hidden; }
+  .bar i { display: block; height: 100%; width: 40%; background: linear-gradient(90deg, transparent, #e9cb7c, transparent); animation: sweep 1.4s ease-in-out infinite; }
+  @keyframes sweep { from { transform: translateX(-100%); } to { transform: translateX(260%); } }
+  @media (prefers-reduced-motion: reduce) { .orbit, .world, .bar i { animation: none; } }
+</style>
+</head>
+<body>
+<div class="wrap"><div>
+  <svg viewBox="0 0 46 46" aria-hidden="true">
+    <defs><radialGradient id="c" cx="38%" cy="34%" r="80%"><stop offset="0%" stop-color="#f7e6b0"/><stop offset="55%" stop-color="#e9cb7c"/><stop offset="100%" stop-color="#a87f2e"/></radialGradient></defs>
+    <circle cx="23" cy="23" r="21" fill="none" stroke="rgba(233,203,124,.55)" stroke-width=".8"/>
+    <circle class="orbit" cx="23" cy="23" r="14" fill="none" stroke="rgba(167,139,250,.55)" stroke-width=".6" stroke-dasharray="3 4"/>
+    <circle cx="23" cy="23" r="6.5" fill="url(#c)"/>
+    <g class="world"><circle cx="37" cy="23" r="2" fill="#a78bfa"/></g>
+  </svg>
+  <h1>CELESTIA</h1>
+  <p id="msg">aligning the heavens</p>
+  <div class="bar"><i></i></div>
+</div></div>
+</body>
+</html>

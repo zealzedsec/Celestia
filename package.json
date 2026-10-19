@@ -1,0 +1,89 @@
+{
+  "name": "celestia",
+  "version": "7.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -H 127.0.0.1 -p 3000",
+    "build": "prisma generate && next build && node scripts/finish-standalone.mjs",
+    "start": "node scripts/start.mjs",
+    "lint": "eslint src tests",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "npm run typecheck && npm run lint && npm run test",
+    "db:push": "prisma db push",
+    "db:generate": "prisma generate",
+    "db:studio": "prisma studio",
+    "postinstall": "prisma generate",
+    "desktop:prepare": "node scripts/prepare-desktop.mjs",
+    "desktop": "npm run build && npm run desktop:prepare && electron desktop",
+    "desktop:dev": "electron desktop --dev-url=http://localhost:3000",
+    "dist": "npm run build && npm run desktop:prepare && electron-builder --publish never",
+    "dist:linux": "npm run build && npm run desktop:prepare && electron-builder --linux --publish never",
+    "dist:win": "npm run build && npm run desktop:prepare && electron-builder --win --publish never",
+    "dist:mac": "npm run build && npm run desktop:prepare && electron-builder --mac --publish never"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.11.1",
+    "@radix-ui/react-dialog": "^1.1.14",
+    "@radix-ui/react-popover": "^1.1.14",
+    "@radix-ui/react-scroll-area": "^1.2.9",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@radix-ui/react-switch": "^1.2.5",
+    "@radix-ui/react-tabs": "^1.1.12",
+    "@radix-ui/react-toast": "^1.2.14",
+    "@radix-ui/react-tooltip": "^1.2.7",
+    "astronomy-engine": "^2.1.19",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
+    "framer-motion": "^12.23.2",
+    "lucide-react": "^0.525.0",
+    "next": "^16.1.1",
+    "prisma": "^6.11.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.3.1",
+    "zod": "^4.0.2",
+    "zustand": "^5.0.6"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "bun-types": "^1.3.4",
+    "electron": "^44.8.0",
+    "electron-builder": "^26.15.3",
+    "eslint": "^9",
+    "eslint-config-next": "^16.1.1",
+    "tailwindcss": "^4",
+    "tw-animate-css": "^1.3.5",
+    "typescript": "^5",
+    "vitest": "^3.2.7"
+  },
+  "description": "CELESTIA \u2014 a living astronomy & astrology observatory: live ephemeris, sky dome, almanac, natal & synastry charts, planetary hours and a journal.",
+  "engines": {
+    "node": ">=20.9"
+  },
+  "homepage": "https://github.com/zealzedsec/Celestia",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zealzedsec/Celestia.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zealzedsec/Celestia/issues"
+  },
+  "license": "MIT",
+  "author": "CELESTIA contributors",
+  "keywords": [
+    "astronomy",
+    "astrology",
+    "ephemeris",
+    "moon-phase",
+    "natal-chart",
+    "planetary-hours",
+    "almanac",
+    "electron",
+    "nextjs"
+  ]
+}

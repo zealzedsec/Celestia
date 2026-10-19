@@ -1,0 +1,48 @@
+name: Release
+
+# Push a tag like v7.0.1 → desktop builds for Linux, Windows and macOS are attached to a DRAFT release.
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  desktop:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-22.04
+            target: --linux AppImage deb
+          - os: windows-latest
+            target: --win nsis
+          - os: macos-latest
+            target: --mac dmg
+    runs-on: ${{ matrix.os }}
+    env:
+      DATABASE_URL: file:./ci.db
+      NEXT_TELEMETRY_DISABLED: 1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - run: npm run desktop:prepare
+      - name: Package & upload to the draft release
+        run: npx electron-builder ${{ matrix.target }} --publish always
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # unsigned builds: macOS Gatekeeper and Windows SmartScreen will warn on first launch
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+      - name: Attach the AppImage launcher installer
+        if: runner.os == 'Linux'
+        run: gh release upload "v$(node -p "require('./package.json').version")" scripts/install-launcher.sh --clobber
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

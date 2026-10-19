@@ -52,7 +52,7 @@ $celestiaSelf = $PSCommandPath
 
   function Test-NodeVersion {
     if (-not (Get-Command node -ErrorAction SilentlyContinue)) { return $false }
-    & node -e "const [a,b]=process.versions.node.split('.').map(Number); process.exit(a>20||(a===20&&b>=9)?0:1)"
+    & node -e "const [a,b]=process.versions.node.split('.').map(Number); process.exit(a>22||(a===22&&b>=12)?0:1)"
     return ($LASTEXITCODE -eq 0)
   }
 
@@ -77,7 +77,7 @@ $celestiaSelf = $PSCommandPath
       }
     }
     if (-not (Get-Command git -ErrorAction SilentlyContinue)) { throw 'Git is not installed (or not on PATH yet - open a new PowerShell window and run this again).' }
-    if (-not (Test-NodeVersion)) { throw 'Node.js 20.9 or newer is required. Update it with:  winget upgrade OpenJS.NodeJS.LTS' }
+    if (-not (Test-NodeVersion)) { throw 'Node.js 22.12 or newer is required. Update it with:  winget upgrade OpenJS.NodeJS.LTS' }
     Info "node $(& node -v) / npm $(& npm.cmd -v) / $(& git --version)"
 
     # -- 2. source ---------------------------------------------------------------

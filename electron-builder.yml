@@ -2,7 +2,7 @@
 appId: io.github.celestia.observatory
 productName: CELESTIA
 copyright: Copyright © 2026 CELESTIA contributors
-electronVersion: 44.8.0
+electronVersion: 44.9.0
 
 directories:
   app: desktop          # the tiny Electron shell (main/preload/splash)

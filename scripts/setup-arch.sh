@@ -45,14 +45,14 @@ if [[ -z "${SKIP_DEPS:-}" ]]; then
     # git/node/npm build it; fuse2 runs AppImages; the rest are Electron's runtime libraries
     sudo pacman -S --needed --noconfirm git nodejs npm fuse2 gtk3 nss alsa-lib libnotify xdg-utils
   else
-    info "pacman not found — skipping system packages (install git, Node.js ≥ 20.9, npm and fuse2 yourself)"
+    info "pacman not found — skipping system packages (install git, Node.js ≥ 22.12, npm and fuse2 yourself)"
   fi
 fi
 
 command -v git >/dev/null || die "git is missing"
 command -v node >/dev/null || die "Node.js is missing"
-node -e 'const [a,b]=process.versions.node.split(".").map(Number); process.exit(a>20||(a===20&&b>=9)?0:1)' \
-  || die "Node.js $(node -v) is too old — CELESTIA needs ≥ 20.9"
+node -e 'const [a,b]=process.versions.node.split(".").map(Number); process.exit(a>22||(a===22&&b>=12)?0:1)' \
+  || die "Node.js $(node -v) is too old — CELESTIA needs ≥ 22.12 (sudo pacman -Syu nodejs)"
 info "node $(node -v) · npm $(npm -v) · $(git --version)"
 
 # ── 2 · source ──────────────────────────────────────────────────────────────

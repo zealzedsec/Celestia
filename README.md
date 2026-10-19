@@ -119,7 +119,7 @@ There's no account, no telemetry and no tracking. Everything is computed locally
 
 ## Build from source
 
-Requires Node.js ≥ 20.9.
+Requires Node.js ≥ 22.12.
 
 ```bash
 git clone https://github.com/zealzedsec/Celestia.git && cd Celestia

@@ -2,6 +2,22 @@
 
 All notable changes to CELESTIA. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [7.0.1] — 2026-10-19 · security hardening
+
+### Security
+- **Electron 44.9.0**, which carries the latest Chromium security fixes for the desktop app.
+- **Content-Security-Policy** in production and the desktop app. Pages may only load code from, and send data to, CELESTIA's own server.
+- **Dependencies:** 0 known vulnerabilities in shipped dependencies.
+  - Patched `deepmerge-ts` under the Prisma CLI.
+  - Vitest 5 fixes two critical advisories in the test runner.
+- **CI:**
+  - GitHub Actions pinned to exact commits.
+  - Checkouts no longer leave a write token on disk, where dependency install scripts could read it.
+- **Dependabot** groups minor and patch updates and no longer opens breaking major-version PRs.
+
+### Fixed
+- **Node.js minimum:** the setup scripts now require Node.js ≥ 22.12, which Electron and Vitest need. They used to accept 20.9 and then fail partway through.
+
 ## [7.0.0] — 2026-10-16 · "Orrery": the first public release
 
 ### Desktop
